@@ -10,6 +10,7 @@ const $ = require("jquery");
 require("jquery-migrate");
 require("webpack-jquery-ui");
 require("bootstrap");
+require('bootstrap-sass');
 require("../js/owl.carousel.min.js");
 require("../js/jquery.stellar.min.js");
 require("../js/jquery.countdown.min.js");
@@ -19,6 +20,7 @@ require("aos");
 require("../js/main.js");
 
 require("../fonts/icomoon/style.css");
+require("../fonts/flaticon/font/flaticon.css");
 
 require("../css/bootstrap.min.css");
 require("../css/magnific-popup.css");

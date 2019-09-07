@@ -269,6 +269,7 @@ h1, h2, h3, h4, h5,
     .site-navbar .site-navigation .site-menu .has-children {
       position: relative; }
       .site-navbar .site-navigation .site-menu .has-children > a {
+        font-size: 1.0em;
         position: relative;
         padding-right: 20px; }
         .site-navbar .site-navigation .site-menu .has-children > a:before {

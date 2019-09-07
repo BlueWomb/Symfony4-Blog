@@ -33,6 +33,13 @@ class Tag
     private $description;
 
     /**
+     * @var string
+     * 
+     * @ORM\Column(name="color", type="string", length=7, nullable=true)
+     */
+    private $color;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
     private $posts;
@@ -95,6 +102,18 @@ class Tag
             $this->posts->removeElement($post);
             $post->removeTag($this);
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
