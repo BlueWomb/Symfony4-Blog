@@ -40,6 +40,13 @@ class Post
     /**
      * @var string
      *
+     * @ORM\Column(name="preview_filepath", type="string", length=255)
+     */
+    private $preview;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
@@ -232,5 +239,17 @@ class Post
     public function getCategory(): ?Category
     {
         return $this->category;
+    }
+
+    public function getPreview(): ?string
+    {
+        return $this->preview;
+    }
+
+    public function setPreview(string $preview): self
+    {
+        $this->preview = $preview;
+
+        return $this;
     }
 }
