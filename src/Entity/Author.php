@@ -22,6 +22,13 @@ class Author
     /**
      * @var string
      * 
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @var string
+     * 
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
@@ -251,6 +258,18 @@ class Author
                 $post->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

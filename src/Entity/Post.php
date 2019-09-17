@@ -40,7 +40,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="preview_filepath", type="string", length=255)
+     * @ORM\Column(name="preview", type="string", length=255)
      */
     private $preview;
 
@@ -171,6 +171,11 @@ class Post
         return $this;
     }
 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -216,6 +221,18 @@ class Post
         return $this;
     }
 
+    public function getPreview(): ?string
+    {
+        return $this->preview;
+    }
+
+    public function setPreview(string $preview): self
+    {
+        $this->preview = $preview;
+
+        return $this;
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -234,22 +251,5 @@ class Post
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function getPreview(): ?string
-    {
-        return $this->preview;
-    }
-
-    public function setPreview(string $preview): self
-    {
-        $this->preview = $preview;
-
-        return $this;
     }
 }

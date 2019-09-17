@@ -43,8 +43,10 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/index/{page}/{category_id}", name="index")
      * @Route("/")
+     * 
+     * @Route("/index", name="index")
+     * @Route("/index/{page}/{category_id}", name="index_with_params")
      */
     public function indexAction($page = 1, $category_id = -1)
     {
