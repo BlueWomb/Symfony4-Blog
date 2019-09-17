@@ -18,3 +18,7 @@
 ###> symfony/web-server-bundle ###
 .web-server-pid
 ###< symfony/web-server-bundle ###
+
+asset/* linguist-vendored
+app.js linguist-vendored=false
+index.js linguist-vendored=false
