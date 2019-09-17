@@ -40,7 +40,7 @@
                 <div class="col-md-12">
                     <div class="custom-pagination">
                         {% for index in 1..pages + 1 %}
-                            <a href="{{ path("index", {json: -1, page: index, category_id: -1}) }}">{{ index }}</a>
+                            <a href="{{ path("index_with_params", {page: index}) }}">{{ index }}</a>
                         {% endfor %}
                     </div>
                 </div>

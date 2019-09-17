@@ -47,9 +47,20 @@ class BlogController extends AbstractController
      * 
      * @Route("/index", name="index")
      * @Route("/index/{page}/{category_id}", name="index_with_params")
+     * @Route("/index/{type}/{page}/{category_id}", name="index_json", options = { "expose" = true })
      */
-    public function indexAction($page = 1, $category_id = -1)
+    public function indexAction($type = 'default', $page = 1, $category_id = -1)
     {
+        if(strcmp($type, "default") === 0) {
+            return $this->makeTemplateResponse($page, $category_id);
+        }
+
+        if (strcmp($type, "json") === 0) {
+            return $this->makeJsonResponse($page, $category_id);
+        }
+    }
+
+    public function makeTemplateResponse($page, $category_id) {
         return $this->render('index.html.twig', [
             'posts' => $this->get_all_posts($page, POST_LIMIT, $category_id),
             'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id),
@@ -59,15 +70,8 @@ class BlogController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/filter_by_category", name="filter_by_category", methods={"GET","HEAD"})
-     */
-    public function filterByCategoryAction()
+    public function makeJsonResponse($page, $category_id)
     {
-        $request = Request::createFromGlobals();
-        $page = $request->query->get('page');
-        $category_id = $request->query->get('category_id');
-
         $jsonContent = $this->serializer->serialize($this->get_all_posts($page, POST_LIMIT, $category_id), 'json');
         $response = new JsonResponse();
         $response->setData($jsonContent);

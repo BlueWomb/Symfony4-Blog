@@ -6,6 +6,11 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
+const routes = require('../../public/js/fos_js_routes.json');
+import Routing from '../../public/bundles/fosjsrouting/js/router.min.js';
+Routing.setRoutingData(routes);
+window.Routing = Routing;
+
 const $ = require("jquery");
 require("jquery-migrate");
 require("webpack-jquery-ui");
