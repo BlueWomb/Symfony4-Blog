@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -44,42 +43,42 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/")
-     * 
      * @Route("/index", name="index")
-     * @Route("/index/{page}/{category_id}", name="index_with_params")
-     * @Route("/index/{type}/{page}/{category_id}", name="index_json", options = { "expose" = true })
+     * 
+     * @Route("/index/{type}/{page}/{category_id}/{search_key}", name="index_with_params_json", options = { "expose" = true })
      */
-    public function indexAction($type = 'default', $page = 1, $category_id = -1)
+    public function indexAction($type = 'default', $page = 1, $category_id = -1, $search_key = null)
     {
         if(strcmp($type, "default") === 0) {
-            return $this->makeTemplateResponse($page, $category_id);
+            return $this->makeTemplateResponse($page, $category_id, $search_key);
         }
 
         if (strcmp($type, "json") === 0) {
-            return $this->makeJsonResponse($page, $category_id);
+            return $this->makeJsonResponse($page, $category_id, $search_key);
         }
     }
 
-    public function makeTemplateResponse($page, $category_id) {
+    public function makeTemplateResponse($page, $category_id, $search_key) {
         return $this->render('index.html.twig', [
-            'posts' => $this->get_all_posts($page, POST_LIMIT, $category_id),
-            'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id),
+            'posts' => $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key),
+            'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
             'pages' => count($this->postRepository->findAll()) / POST_LIMIT,
             'tags' => $this->categoryRepository->findAll(),
             'categories' => $this->categoryRepository->findAll(),
         ]);
     }
 
-    public function makeJsonResponse($page, $category_id)
+    public function makeJsonResponse($page, $category_id, $search_key)
     {
-        $jsonContent = $this->serializer->serialize($this->get_all_posts($page, POST_LIMIT, $category_id), 'json');
+        $data = $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key);
+        $jsonContent = $this->serializer->serialize($data, 'json');
         $response = new JsonResponse();
         $response->setData($jsonContent);
         
         return $response;
     }
 
-    public function get_all_posts($page, $limit, $category_id)
+    public function get_all_posts($page, $limit, $category_id, $search_key)
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder
@@ -90,10 +89,15 @@ class BlogController extends AbstractController
             ->setMaxResults($limit);
 
         if ($category_id >= 0 && $queryBuilder != null) {
-            $queryBuilder->where('bp.category = :category');
+            $queryBuilder->andWhere('bp.category = :category');
             $queryBuilder->setParameter('category', $category_id);
         }
 
+        if($search_key != null && $queryBuilder != null) {
+            $queryBuilder->andWhere('bp.title like :search_key');
+            $queryBuilder->setParameter('search_key', '%'.addcslashes($search_key, '%_').'%');
+        }
+        
         return $queryBuilder->getQuery()->getResult();
     }
 }

@@ -1,7 +1,37 @@
 require("../js/app.js");
 
+$(document).ready(function() {
+    console.log("Window cleared");
+
+    window.page = 1;
+    window.category_id = -1;
+    window.search_key = null;
+});
+
+$('#s').on('keyup', function() {
+    window.page = 1;
+    window.search_key = this.value
+    
+    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
+    console.log("filter_by_search_key");
+
+    $.ajax({
+        url: generated_url,
+        dataType: 'json',
+        complete: function (xhr, status) {
+            if (status !== "error" && xhr.responseJSON) {
+                    input = JSON.parse(xhr.responseJSON);
+                    update_div(input);
+            }
+        },
+    });
+});
+
 window.filter_by_category = function (category_id) {
-    var generated_url = Routing.generate('index_json', { type: 'json', page: 1, category_id: category_id });
+    window.page = 1;
+    window.category_id = category_id;
+
+    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
     console.log("filter_by_category");
     
     $.ajax({
