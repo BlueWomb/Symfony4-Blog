@@ -48,6 +48,13 @@ window.filter_by_category = function (category_id) {
 
 function update_div(input) {
     $("#div-site-content").html("");
+
+    if(input.length == 0) {
+        var output = '<div style><h2>No post found</h2></div>';
+        $("#div-site-content").append(output);
+        return;
+    }
+
     for (var i = 0; i < input.length; i++) {
         output = '<div class="col-lg-4 mb-4">' +
             '<div class="entry2">' +

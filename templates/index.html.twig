@@ -2,13 +2,29 @@
 
 {% block stylesheets %}{{ encore_entry_link_tags('index') }}{% endblock %}
 
-{% block right_bar %}
-    {% if categories is defined %}
-        {% for category in categories %}
-            <li><a onClick="filter_by_category({{ category.id }});" href="#">{{ category.name }}</a></li>
-        {% endfor %}
-    {% endif %}
-    <li class="d-none d-lg-inline-block"><a href="#" class="js-search-toggle"><span class="icon-search"></span></a></li>
+{% block search_bar_zone %}
+    <div class="col-12 search-form-wrap js-search-form">
+        <form method="get" action="#">
+            <input type="text" id="s" class="form-control" placeholder="Search...">
+            <button class="search-btn" type="submit"><span class="icon-search"></span></button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block right_bar_zone %}
+    <div class="col-8 text-right">
+        <nav class="site-navigation" role="navigation">
+            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
+                {% if categories is defined %}
+                    {% for category in categories %}
+                        <li><a onClick="filter_by_category({{ category.id }});" href="#">{{ category.name }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                <li class="d-none d-lg-inline-block"><a href="#" class="js-search-toggle"><span class="icon-search"></span></a></li>
+            </ul>
+        </nav>
+        <a href="#" class="site-menu-toggle js-menu-toggle text-black d-inline-block d-lg-none"><span class="icon-menu h3"></span></a>
+    </div>
 {% endblock %}
 
 {% block body %}
