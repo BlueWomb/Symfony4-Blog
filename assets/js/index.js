@@ -89,6 +89,7 @@ function update_div(input) {
     }
 
     for (var i = 0; i < input.length; i++) {
+        var generate_url = Routing.generate('single', { id: input[i].id })
         output = '<div class="col-lg-4 mb-4">' +
             '<div class="entry2">' +
             '<a href="single.html"><img src="build/images/' + input[i].preview + '" alt="Image" class="img-fluid rounded"></a>' +
@@ -104,7 +105,7 @@ function update_div(input) {
             '<span>&nbsp;-&nbsp;' + input[i].createdAt.toString() + '</span>' +
             '</div>' +
             '<p>' + truncate(input[i].description) + '</p>' +
-            '<p><a href="#">Read More</a></p>' +
+            '<p><a href="' + generate_url + '">Read More</a></p>' +
             '</div>' +
             '</div>' +
             '<div>';

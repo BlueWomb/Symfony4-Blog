@@ -43,7 +43,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/")
-     * @Route("/index", name="index")
+     * @Route("/index", name="index", options = { "expose" = true })
      * 
      * @Route("/index/{type}/{page}/{category_id}/{search_key}", name="index_with_params_json", options = { "expose" = true })
      */
@@ -59,9 +59,9 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/single/{id}", name="single")
+     * @Route("/single/{id}", name="single", options = { "expose" = true })
      * 
-     * @Route("/index/{type}/{id}", name="single_json", options = { "expose" = true })
+     * @Route("/single/{type}/{id}", name="single_json", options = { "expose" = true })
      */
     public function singleAction($type = 'default', $id)
     {
