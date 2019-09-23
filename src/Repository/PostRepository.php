@@ -19,32 +19,25 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    // /**
-    //  * @return Post[] Returns an array of Post objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @return Post[]
+     */
+    public function findByParams($page, $limit, $category_id, $search_key) {
+        $queryBuilder = $this->createQueryBuilder('bp');
+        $queryBuilder->orderBy('bp.createdAt', 'DESC');
+        $queryBuilder->setFirstResult($limit * ($page - 1));
+        $queryBuilder->setMaxResults($limit);
 
-    /*
-    public function findOneBySomeField($value): ?Post
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ($category_id >= 0 && $queryBuilder != null) {
+            $queryBuilder->andWhere('bp.category = :category');
+            $queryBuilder->setParameter('category', $category_id);
+        }
+
+        if($search_key != null && $queryBuilder != null) {
+            $queryBuilder->andWhere('bp.title like :search_key');
+            $queryBuilder->setParameter('search_key', '%'.addcslashes($search_key, '%_').'%');
+        }
+        
+        return $queryBuilder->getQuery()->getResult();
     }
-    */
 }

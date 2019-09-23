@@ -91,9 +91,15 @@ class Post
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserActivity", mappedBy="post")
+     */
+    private $userActivity;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->userActivity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,6 +237,37 @@ class Post
     public function setPreview(string $preview): self
     {
         $this->preview = $preview;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserActivity[]
+     */
+    public function getUserActivity(): Collection
+    {
+        return $this->views;
+    }
+
+    public function addUserActivity(UserActivity $userActivity): self
+    {
+        if (!$this->userActivitys->contains($userActivity)) {
+            $this->userActivitys[] = $userActivity;
+            $userActivity->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserActivity(userActivity $userActivity): self
+    {
+        if ($this->userActivitys->contains($userActivity)) {
+            $this->userActivitys->removeElement($userActivity);
+            // set the owning side to null (unless already changed)
+            if ($userActivity->getPost() === $this) {
+                $userActivity->setPost(null);
+            }
+        }
 
         return $this;
     }
