@@ -54,9 +54,9 @@
             </div>
             <div class="row text-center pt-5 border-top">
                 <div class="col-md-12">
-                    <div class="custom-pagination">
+                    <div id="div-pagination" class="custom-pagination">
                         {% for index in 1..pages + 1 %}
-                            <a href="#"></a>
+                            <a href="#"  onclick="filter_by_page({{index}})">{{index}}</a>
                         {% endfor %}
                     </div>
                 </div>

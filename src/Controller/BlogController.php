@@ -73,7 +73,7 @@ class BlogController extends AbstractController
         $data = $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key);
         $jsonContent = $this->serializer->serialize($data, 'json');
         $response = new JsonResponse();
-        $response->setData($jsonContent);
+        $response->setData(['data' => $jsonContent, 'pages' => strval(count($data) / POST_LIMIT)]);
         
         return $response;
     }

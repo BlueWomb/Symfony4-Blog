@@ -20,8 +20,11 @@ $('#s').on('keyup', function() {
         dataType: 'json',
         complete: function (xhr, status) {
             if (status !== "error" && xhr.responseJSON) {
-                    input = JSON.parse(xhr.responseJSON);
-                    update_div(input);
+                input = JSON.parse(xhr.responseJSON.data);
+                num_pages = Math.trunc(JSON.parse(xhr.responseJSON.pages));
+                
+                update_div(input);
+                update_pagination(num_pages);
             }
         },
     });
@@ -39,11 +42,41 @@ window.filter_by_category = function (category_id) {
         dataType: 'json',
         complete: function (xhr, status) {
             if (status !== "error" && xhr.responseJSON) {
-                input = JSON.parse(xhr.responseJSON);
+                input = JSON.parse(xhr.responseJSON.data);
+                num_pages = Math.trunc(JSON.parse(xhr.responseJSON.pages));
+                
+                update_div(input);
+                update_pagination(num_pages);
+            }
+        },
+    });
+}
+
+window.filter_by_page = function (page) {
+    window.page = page;
+
+    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: page, category_id: category_id, search_key: search_key });
+    console.log("filter_by_page");
+    
+    $.ajax({
+        url: generated_url,
+        dataType: 'json',
+        complete: function (xhr, status) {
+            if (status !== "error" && xhr.responseJSON) {
+                input = JSON.parse(xhr.responseJSON.data);
                 update_div(input);
             }
         },
     });
+}
+
+function update_pagination(num_pages) {
+    $("#div-pagination").html("");
+    for (var i = 1; i <= num_pages + 1; i++) {
+        var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: i, category_id: category_id, search_key: search_key });
+        var output = '<a href="#" onclick="filter_by_page(' + i + ')">' + i + '</a>';
+        $("#div-pagination").append(output);
+    }
 }
 
 function update_div(input) {
