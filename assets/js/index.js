@@ -118,3 +118,9 @@ function truncate(str, length, ending) {
     if (str.length > length) return str.substring(0, length - ending.length) + ending;
     else return str;
 }
+
+window.hide_search_form = function() {
+    if ( $('.js-search-form').hasClass('active') ) {
+        $('.js-search-form').removeClass('active');
+    }
+}

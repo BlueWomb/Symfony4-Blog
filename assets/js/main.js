@@ -260,5 +260,4 @@ jQuery(document).ready(function($) {
 		}
 	};
 	searchToggle();
-
 });
