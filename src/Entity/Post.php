@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+
 /**
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -248,7 +250,7 @@ class Post
     /**
      * @ORM\PreUpdate
      */
-    public function preUpdate()
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         $this->setUpdatedAt(new \DateTime());
     }

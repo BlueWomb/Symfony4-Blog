@@ -71,14 +71,18 @@ class BlogController extends AbstractController
      */
     public function singleAction($type = 'default', $id)
     {
+        $data = ['post' => $this->postRepository->findById($id), 
+                    'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null),
+                        'related_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null), 
+                            'tags' => $this->tagRepository->findAll(), 
+                                'categories' => $this->categoryRepository->findAll()];
+
         if(strcmp($type, "default") === 0) {
-            return $this->render('single.html.twig', [
-                'post' => $this->postRepository->findById($id),
-                'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null),
-                'related_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null),
-                'tags' => $this->tagRepository->findAll(),
-                'categories' => $this->categoryRepository->findAll(),
-            ]);
+            return $this->makeTemplateResponse('single.html.twig', $data);
+        }
+
+        if (strcmp($type, "json") === 0) {
+            return $this->makeJsonResponse(array($data['posts']));
         }
     }
 
