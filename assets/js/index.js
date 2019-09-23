@@ -12,7 +12,7 @@ $('#s').on('keyup', function() {
     window.page = 1;
     window.search_key = this.value
     
-    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
+    var generated_url = Routing.generate('index_with_params', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
     console.log("filter_by_search_key");
 
     $.ajax({
@@ -34,7 +34,7 @@ window.filter_by_category = function (category_id) {
     window.page = 1;
     window.category_id = category_id;
 
-    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
+    var generated_url = Routing.generate('index_with_params', { type: 'json', page: 1, category_id: category_id, search_key: search_key });
     console.log("filter_by_category");
     
     $.ajax({
@@ -55,7 +55,7 @@ window.filter_by_category = function (category_id) {
 window.filter_by_page = function (page) {
     window.page = page;
 
-    var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: page, category_id: category_id, search_key: search_key });
+    var generated_url = Routing.generate('index_with_params', { type: 'json', page: page, category_id: category_id, search_key: search_key });
     console.log("filter_by_page");
     
     $.ajax({
@@ -73,7 +73,7 @@ window.filter_by_page = function (page) {
 function update_pagination(num_pages) {
     $("#div-pagination").html("");
     for (var i = 1; i <= num_pages + 1; i++) {
-        var generated_url = Routing.generate('index_with_params_json', { type: 'json', page: i, category_id: category_id, search_key: search_key });
+        var generated_url = Routing.generate('index_with_params', { type: 'json', page: i, category_id: category_id, search_key: search_key });
         var output = '<a href="#" onclick="filter_by_page(' + i + ')">' + i + '</a>';
         $("#div-pagination").append(output);
     }
@@ -92,7 +92,7 @@ function update_div(input) {
         var generate_url = Routing.generate('single', { id: input[i].id })
         output = '<div class="col-lg-4 mb-4">' +
             '<div class="entry2">' +
-            '<a href="single.html"><img src="build/images/' + input[i].preview + '" alt="Image" class="img-fluid rounded"></a>' +
+            '<a href="single.html"><img src="/build/images/' + input[i].preview + '" alt="Image" class="img-fluid rounded"></a>' +
             '<div class="excerpt">';
 
         for (var j = 0; j < input[i].tags.length; j++)
@@ -100,7 +100,7 @@ function update_div(input) {
 
         output += '<h2><a href="single.html">' + input[i].title + '</a></h2>' +
             '<div class="post-meta align-items-center text-left clearfix">' +
-            '<figure class="author-figure mb-0 mr-3 float-left"><img src="build/images/' + input[i].author.image + '" alt="Image" class="img-fluid"></figure>' +
+            '<figure class="author-figure mb-0 mr-3 float-left"><img src="/build/images/' + input[i].author.image + '" alt="Image" class="img-fluid"></figure>' +
             '<span class="d-inline-block mt-1">By<a href="#">' + input[i].author.name + '</a></span>' +
             '<span>&nbsp;-&nbsp;' + input[i].createdAt.toString() + '</span>' +
             '</div>' +

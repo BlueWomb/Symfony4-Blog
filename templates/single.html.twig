@@ -20,11 +20,9 @@
         <nav class="site-navigation" role="navigation">
             <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
                 {% if categories is defined %}
-                    {% for category in categories %}
-                        <li>
-                            <a onclick="filter_by_category({{ category.id }});" href="#">{{ category.name }}</a>
-                        </li>
-                    {% endfor %}
+                  {% for category in categories %}
+                    <li><a href="{{ path('index_with_params', {category_id: category.id}) }}">{{ category.name }}</a></li>
+                  {% endfor %}
                 {% endif %}
                 <li class="d-none d-lg-inline-block">
                     <a href="#" class="js-search-toggle">
@@ -69,7 +67,7 @@
                     </div>
                     <div class="pt-5">
                         <p>Categories:
-                            <a href="#">{{post[0].category.name}}</a>
+                            <a href="{{ path('index_with_params', {category_id: post[0].category.id}) }}">{{post[0].category.name}}</a>
                             Tags:
                             {% for tag in post[0].tags %}
                                 <a href="#">#{{tag.name}}</a>,
@@ -87,12 +85,9 @@
                                     <h3>Jean Doe</h3>
                                     <div class="meta">January 9, 2018 at 2:21pm</div>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p>
-                                        <a href="#" class="reply rounded">Reply</a>
-                                    </p>
+                                    <p><a href="#" class="reply rounded">Reply</a></p>
                                 </div>
                             </li>
-
                             <li class="comment">
                                 <div class="vcard">
                                     <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
@@ -212,7 +207,7 @@
                             <ul>
                                 {% for popular_post in most_popular_posts %}
                                     <li>
-                                        <a href=""><img src="{{asset('build/images/' ~ popular_post.preview)}}" alt="Image placeholder" class="mr-4"><div class="text">
+                                        <a href="{{ path('single', {id: popular_post.id}) }}"><img src="{{asset('build/images/' ~ popular_post.preview)}}" alt="Image placeholder" class="mr-4"><div class="text">
                                                 <h4>{{popular_post.title}}</h4>
                                                 <div class="post-meta">
                                                     <span class="mr-2">{{ popular_post.createdAt|date('d-m-Y') }}</span>
@@ -229,7 +224,7 @@
                         <ul class="categories">
                             {% for category in categories %}
                                 <li>
-                                    <a href="#">{{category.name}}<span>{{category.posts|length}}</span>
+                                    <a href="{{ path('index_with_params', {category_id: category.id}) }}">{{category.name}}<span>{{category.posts|length}}</span>
                                     </a>
                                 </li>
                             {% endfor %}
@@ -256,11 +251,9 @@
                     <h2>More Related Posts</h2>
                 </div>
             </div>
-
             <div class="row align-items-stretch retro-layout">
-
                 <div class="col-md-5 order-md-2">
-                    <a href="single.html" class="hentry img-1 h-100 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[0].preview) }}');">
+                    <a href="{{ path('single', {id: related_posts[1].id}) }}" class="hentry img-1 h-100 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[0].preview) }}');">
                         {% for tag in related_posts[0].tags %}
                             <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                         {% endfor %}
@@ -271,7 +264,7 @@
                     </a>
                 </div>
                 <div class="col-md-7">
-                    <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[1].preview) }}');">
+                    <a href="{{ path('single', {id: related_posts[1].id}) }}" class="hentry img-2 v-height mb30 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[1].preview) }}');">
                         {% for tag in related_posts[1].tags %}
                             <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                         {% endfor %}
@@ -281,7 +274,7 @@
                         </div>
                     </a>
                     <div class="two-col d-block d-md-flex">
-                        <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[2].preview) }}');">
+                        <a href="{{ path('single', {id: related_posts[2].id}) }}" class="hentry v-height img-2 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[2].preview) }}');">
                             {% for tag in related_posts[2].tags %}
                                 <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                             {% endfor %}
@@ -290,7 +283,8 @@
                                 <span>{{related_posts[2].createdAt|date('d-m-Y')}}</span>
                             </div>
                         </a>
-                        <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[3].preview) }}');">
+                        <br>
+                        <a href="{{ path('single', {id: related_posts[3].id}) }}" class="hentry v-height img-2 ml-auto gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[3].preview) }}');">
                             {% for tag in related_posts[3].tags %}
                                 <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                             {% endfor %}
@@ -301,7 +295,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="site-section bg-lightx">

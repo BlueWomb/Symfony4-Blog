@@ -44,8 +44,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/")
      * @Route("/index", name="index", options = { "expose" = true })
-     * 
-     * @Route("/index/{type}/{page}/{category_id}/{search_key}", name="index_with_params_json", options = { "expose" = true })
+     * @Route("/index/{type}/{page}/{category_id}/{search_key}", name="index_with_params", options = { "expose" = true })
      */
     public function indexAction($type = 'default', $page = 1, $category_id = -1, $search_key = null)
     {

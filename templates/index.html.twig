@@ -69,7 +69,9 @@
             <div class="row align-items-stretch retro-layout">
                 <div class="col-md-5 order-md-2">
                     <a href="single.html" class="hentry img-1 h-100 gradient" style="background-image: url('{{ asset("build/images/img_4.jpg") }}');">
-                        <span class="post-category text-white bg-danger">Travel</span>
+                        {% for tag in most_popular_posts[1].tags %}
+                            <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{ tag.name }}</span>
+                        {% endfor %}
                         <div class="text">
                             <h2>{{ most_popular_posts[0].title }}</h2>
                             <span>{{ most_popular_posts[0].createdAt|date('d-m-Y') }}</span>
@@ -78,7 +80,9 @@
                 </div>
                 <div class="col-md-7">
                     <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="background-image: url('{{ asset("build/images/img_1.jpg") }}');">
-                        <span class="post-category text-white bg-success">Nature</span>
+                        {% for tag in most_popular_posts[1].tags %}
+                            <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{ tag.name }}</span>
+                        {% endfor %}
                         <div class="text text-sm">
                             <h2>{{ most_popular_posts[1].title }}</h2>
                             <span>{{ most_popular_posts[1].createdAt|date('d-m-Y') }}</span>
@@ -86,14 +90,18 @@
                     </a>
                     <div class="two-col d-block d-md-flex">
                         <a href="single.html" class="hentry v-height img-2 gradient" style="background-image: url('{{ asset("build/images/img_2.jpg") }}');">
-                            <span class="post-category text-white bg-primary">Sports</span>
+                            {% for tag in most_popular_posts[1].tags %}
+                                <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{ tag.name }}</span>
+                            {% endfor %}
                             <div class="text text-sm">
                                 <h2>{{ most_popular_posts[2].title }}</h2>
                                 <span>{{ most_popular_posts[2].createdAt|date('d-m-Y') }}</span>
                             </div>
                         </a>
                         <a href="single.html" class="hentry v-height img-2 ml-auto gradient" style="background-image: url('{{ asset("build/images/img_3.jpg") }}');">
-                            <span class="post-category text-white bg-warning">Lifestyle</span>
+                            {% for tag in most_popular_posts[1].tags %}
+                                <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{ tag.name }}</span>
+                            {% endfor %}
                             <div class="text text-sm">
                                 <h2>{{ most_popular_posts[3].title }}</h2>
                                 <span>{{ most_popular_posts[3].createdAt|date('d-m-Y') }}</span>
@@ -104,8 +112,7 @@
             </div>
         </div>
     </div>
-
-
+    
     <div class="site-section bg-lightx">
         <div class="container">
             <div class="row justify-content-center text-center">
