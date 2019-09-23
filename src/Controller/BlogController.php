@@ -58,12 +58,30 @@ class BlogController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/single/{id}", name="single")
+     * 
+     * @Route("/index/{type}/{id}", name="single_json", options = { "expose" = true })
+     */
+    public function singleAction($type = 'default', $id)
+    {
+        if(strcmp($type, "default") === 0) {
+            return $this->render('single.html.twig', [
+                'post' => $this->postRepository->findById($id),
+                'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null),
+                'related_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, -1, null),
+                'tags' => $this->tagRepository->findAll(),
+                'categories' => $this->categoryRepository->findAll(),
+            ]);
+        }
+    }
+
     public function makeTemplateResponse($page, $category_id, $search_key) {
         return $this->render('index.html.twig', [
             'posts' => $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key),
             'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
             'pages' => count($this->postRepository->findAll()) / POST_LIMIT,
-            'tags' => $this->categoryRepository->findAll(),
+            'tags' => $this->tagRepository->findAll(),
             'categories' => $this->categoryRepository->findAll(),
         ]);
     }
