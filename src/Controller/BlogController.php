@@ -48,12 +48,19 @@ class BlogController extends AbstractController
      */
     public function indexAction($type = 'default', $page = 1, $category_id = -1, $search_key = null)
     {
+        $posts = $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key);
+        $pages = ($category_id === -1 && $search_key === null ? count($this->postRepository->findAll()) : count($posts)) / POST_LIMIT;
+
+        $data = ['posts' => $posts, 'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
+                    'pages' => $pages, 'tags' => $this->tagRepository->findAll(), 
+                        'categories' => $this->categoryRepository->findAll()];
+
         if(strcmp($type, "default") === 0) {
-            return $this->makeTemplateResponse($page, $category_id, $search_key);
+            return $this->makeTemplateResponse('index.html.twig', $data);
         }
 
         if (strcmp($type, "json") === 0) {
-            return $this->makeJsonResponse($page, $category_id, $search_key);
+            return $this->makeJsonResponse(array($data['posts'], $data['pages']));
         }
     }
 
@@ -75,23 +82,15 @@ class BlogController extends AbstractController
         }
     }
 
-    public function makeTemplateResponse($page, $category_id, $search_key) {
-        return $this->render('index.html.twig', [
-            'posts' => $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key),
-            'most_popular_posts' => $this->get_all_posts(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
-            'pages' => count($this->postRepository->findAll()) / POST_LIMIT,
-            'tags' => $this->tagRepository->findAll(),
-            'categories' => $this->categoryRepository->findAll(),
-        ]);
+    public function makeTemplateResponse($template, $data) {
+        return $this->render($template, $data);
     }
 
-    public function makeJsonResponse($page, $category_id, $search_key)
+    public function makeJsonResponse($data)
     {
-        $data = $this->get_all_posts($page, POST_LIMIT, $category_id, $search_key);
         $jsonContent = $this->serializer->serialize($data, 'json');
         $response = new JsonResponse();
-        $response->setData(['data' => $jsonContent, 'pages' => strval(count($data) / POST_LIMIT)]);
-        
+        $response->setData($jsonContent);
         return $response;
     }
 

@@ -4,10 +4,8 @@
 
 {% block search_bar_zone %}
     <div class="col-12 search-form-wrap js-search-form">
-        <form method="get" action="#">
-            <input type="text" id="s" class="form-control" placeholder="Search...">
-            <button class="search-btn" onclick="hide_search_form()"><span class="icon-search"></span></button>
-        </form>
+        <input type="text" id="s" class="form-control" placeholder="Search...">
+        <button class="search-btn" onclick="hide_search_form()"><span class="icon-search"></span></button>
     </div>
 {% endblock %}
 
@@ -56,7 +54,7 @@
                 <div class="col-md-12">
                     <div id="div-pagination" class="custom-pagination">
                         {% for index in 1..pages + 1 %}
-                            <a href="#"  onclick="filter_by_page({{index}})">{{index}}</a>
+                            <a href="#" onclick="filter_by_page({{index}})">{{index}}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -112,7 +110,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="site-section bg-lightx">
         <div class="container">
             <div class="row justify-content-center text-center">

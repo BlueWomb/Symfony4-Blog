@@ -20,8 +20,8 @@ $('#s').on('keyup', function() {
         dataType: 'json',
         complete: function (xhr, status) {
             if (status !== "error" && xhr.responseJSON) {
-                input = JSON.parse(xhr.responseJSON.data);
-                num_pages = Math.trunc(JSON.parse(xhr.responseJSON.pages));
+                input = JSON.parse(xhr.responseJSON)[0];
+                num_pages = JSON.parse(xhr.responseJSON)[1];
                 
                 update_div(input);
                 update_pagination(num_pages);
@@ -42,8 +42,8 @@ window.filter_by_category = function (category_id) {
         dataType: 'json',
         complete: function (xhr, status) {
             if (status !== "error" && xhr.responseJSON) {
-                input = JSON.parse(xhr.responseJSON.data);
-                num_pages = Math.trunc(JSON.parse(xhr.responseJSON.pages));
+                input = JSON.parse(xhr.responseJSON)[0];
+                num_pages = JSON.parse(xhr.responseJSON)[1];
                 
                 update_div(input);
                 update_pagination(num_pages);
@@ -63,7 +63,7 @@ window.filter_by_page = function (page) {
         dataType: 'json',
         complete: function (xhr, status) {
             if (status !== "error" && xhr.responseJSON) {
-                input = JSON.parse(xhr.responseJSON.data);
+                input = JSON.parse(xhr.responseJSON)[0];
                 update_div(input);
             }
         },
@@ -96,7 +96,7 @@ function update_div(input) {
             '<div class="excerpt">';
 
         for (var j = 0; j < input[i].tags.length; j++)
-            output += '<span class="post-category text-white bg-secondary mb-3" style="background-color:' + input[i].tags[j].color + '!important;">' + input[i].tags[j].name + '</span>';
+            output += '<span class="post-category text-white bg-secondary mb-3" style="background-color:' + input[i].tags[j].color + '!important;">' + input[i].tags[j].name + '</span>&nbsp;';
 
         output += '<h2><a href="single.html">' + input[i].title + '</a></h2>' +
             '<div class="post-meta align-items-center text-left clearfix">' +

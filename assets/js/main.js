@@ -250,14 +250,9 @@ jQuery(document).ready(function($) {
 				} else {
 					$('.js-search-form').addClass('active');
 				}
-				setTimeout(function() {
-					$('#s').focus();
-				}, 100);
-				
 			});
-
-			
 		}
 	};
+	
 	searchToggle();
 });
