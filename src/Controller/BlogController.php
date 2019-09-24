@@ -30,12 +30,13 @@ class BlogController extends AbstractController
     private $postRepository;
     private $categoryRepository;
     private $tagRepository;
+    private $userActivityRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->encoder = new JsonEncoder();
         $this->normalizer = new ObjectNormalizer();
-        $this->normalizer->setIgnoredAttributes(array('posts'));
+        $this->normalizer->setIgnoredAttributes(array('posts', 'userActivity'));
         $this->serializer = new Serializer(array($this->normalizer), array($this->encoder));
 
         $this->entityManager = $entityManager;
@@ -43,6 +44,7 @@ class BlogController extends AbstractController
         $this->postRepository = $entityManager->getRepository('App:Post');
         $this->categoryRepository = $entityManager->getRepository('App:Category');
         $this->tagRepository = $entityManager->getRepository('App:Tag');
+        $this->userActivityRepository = $entityManager->getRepository('App:UserActivity');
     }
 
     /**
@@ -74,14 +76,16 @@ class BlogController extends AbstractController
      */
     public function singleAction($type = 'default', $id)
     {
-        $data = ['post' => $this->postRepository->findById($id), 
+        $post = $this->postRepository->findById($id)[0];
+        $data = ['post' => $post, 
                     'most_popular_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null),
                         'related_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null), 
                             'tags' => $this->tagRepository->findAll(), 
-                                'categories' => $this->categoryRepository->findAll()];
+                                'categories' => $this->categoryRepository->findAll(),
+                                    'comments' => $this->userActivityRepository->findCommentsByPost($post)];
 
         if ($data['post'] != null)
-            $this->createView(Request::createFromGlobals(), $data['post'][0]);
+            $this->createView(Request::createFromGlobals(), $data['post']);
 
         if(strcmp($type, "default") === 0) {
             return $this->makeTemplateResponse('single.html.twig', $data);

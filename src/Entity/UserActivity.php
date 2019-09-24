@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Table(name="user_activity")
  * @ORM\Entity(repositoryClass="App\Repository\UserActivityRepository")
@@ -24,6 +26,28 @@ class UserActivity
      * @ORM\Column(name="ip", type="string", length=32)
      */
     private $ip;
+
+    /**
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.", checkMX = true)
+     * 
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     */
+    protected $website;
+
+    /**
+     * @ORM\Column(name="message", type="text", nullable=true)
+     */
+    protected $message;
 
     /**
      * @var \DateTime
@@ -94,6 +118,54 @@ class UserActivity
     {
         $this->type = $type;
         
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): self
+    {
+        $this->message = $message;
+
         return $this;
     }
 

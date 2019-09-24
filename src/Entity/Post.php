@@ -246,7 +246,7 @@ class Post
      */
     public function getUserActivity(): Collection
     {
-        return $this->views;
+        return $this->userActivity;
     }
 
     public function addUserActivity(UserActivity $userActivity): self

@@ -38,19 +38,19 @@
 {% endblock %}
 
 {% block body %}
-    <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('{{ asset("build/images/" ~ post[0].preview) }}');">
+    <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('{{ asset("build/images/" ~ post.preview) }}');">
         <div class="container">
             <div class="row same-height justify-content-center">
                 <div class="col-md-12 col-lg-10">
                     <div class="post-entry text-center">
-                        {% for tag in post[0].tags %}
+                        {% for tag in post.tags %}
                             <span class="post-category text-white bg-success mb-3" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                         {% endfor %}
                         <h1 class="mb-4">
-                            <a href="#">{{post[0].title}}</a>
+                            <a href="#">{{post.title}}</a>
                         </h1>
                         <div class="post-meta align-items-center text-center">
-                            <span>{{post[0].createdAt|date('d-m-Y')}}</span>
+                            <span>{{post.createdAt|date('d-m-Y')}}</span>
                         </div>
                     </div>
                 </div>
@@ -62,104 +62,34 @@
             <div class="row blog-entries element-animate">
                 <div class="col-md-12 col-lg-8 main-content">
                     <div class="post-content-body">
-                        <p>{{post[0].description}}</p>
-                        <p>{{post[0].body}}</p>
+                        <p>{{post.description}}</p>
+                        <p>{{post.body}}</p>
                     </div>
                     <div class="pt-5">
                         <p>Categories:
-                            <a href="{{ path('index_with_params', {category_id: post[0].category.id}) }}">{{post[0].category.name}}</a>
+                            <a href="{{ path('index_with_params', {category_id: post.category.id}) }}">{{post.category.name}}</a>
                             Tags:
-                            {% for tag in post[0].tags %}
+                            {% for tag in post.tags %}
                                 <a href="#">#{{tag.name}}</a>,
                             {% endfor %}
                         </p>
                     </div>
                     <div class="pt-5">
-                        <h3 class="mb-5">6 Comments</h3>
+                        <h3 class="mb-5">{{comments|length == 0 ? 'No comments found' : comments|length == 0}}</h3>
                         <ul class="comment-list">
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply rounded">Reply</a></p>
-                                </div>
-                            </li>
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p>
-                                        <a href="#" class="reply rounded">Reply</a>
-                                    </p>
-                                </div>
-
-                                <ul class="children">
-                                    <li class="comment">
-                                        <div class="vcard">
-                                            <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                        </div>
-                                        <div class="comment-body">
-                                            <h3>Jean Doe</h3>
-                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                            <p>
-                                                <a href="#" class="reply rounded">Reply</a>
-                                            </p>
-                                        </div>
-                                        <ul class="children">
-                                            <li class="comment">
-                                                <div class="vcard">
-                                                    <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                                </div>
-                                                <div class="comment-body">
-                                                    <h3>Jean Doe</h3>
-                                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                                    <p>
-                                                        <a href="#" class="reply rounded">Reply</a>
-                                                    </p>
-                                                </div>
-                                                <ul class="children">
-                                                    <li class="comment">
-                                                        <div class="vcard">
-                                                            <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                                        </div>
-                                                        <div class="comment-body">
-                                                            <h3>Jean Doe</h3>
-                                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                                            <p>
-                                                                <a href="#" class="reply rounded">Reply</a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p>
-                                        <a href="#" class="reply rounded">Reply</a>
-                                    </p>
-                                </div>
-                            </li>
+                            {% for comment in comments %}
+                                <li class="comment">
+                                    <div class="vcard">
+                                        <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
+                                    </div>
+                                    <div class="comment-body">
+                                        <h3>Jean Doe</h3>
+                                        <div class="meta">January 9, 2018 at 2:21pm</div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                        <p><a href="#" class="reply rounded">Reply</a></p>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Leave a comment</h3>
@@ -191,10 +121,10 @@
                 <div class="col-md-12 col-lg-4 sidebar">
                     <div class="sidebar-box">
                         <div class="bio text-center">
-                            <img src="{{ asset('build/images/' ~ post[0].author.image) }}" alt="Image Placeholder" class="img-fluid mb-5">
+                            <img src="{{ asset('build/images/' ~ post.author.image) }}" alt="Image Placeholder" class="img-fluid mb-5">
                             <div class="bio-body">
-                                <h2>{{post[0].author.name}}</h2>
-                                <p class="mb-4">{{post[0].author.shortBio|length > 127 ? post[0].author.shortBio|slice(0, 127) ~ '...' : post[0].author.shortBio}}</p>
+                                <h2>{{post.author.name}}</h2>
+                                <p class="mb-4">{{post.author.shortBio|length > 127 ? post.author.shortBio|slice(0, 127) ~ '...' : post.author.shortBio}}</p>
                                 <p>
                                     <a href="#" class="btn btn-primary btn-sm rounded px-4 py-2">Read my bio</a>
                                 </p>

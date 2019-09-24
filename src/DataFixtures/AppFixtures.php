@@ -9,6 +9,7 @@ use App\Entity\Author;
 use App\Entity\Post;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\UserActivity;
 
 class AppFixtures extends Fixture
 {
@@ -67,8 +68,32 @@ class AppFixtures extends Fixture
             $post->addTag($tags[array_rand($tags)]);
             $post->addTag($tags[array_rand($tags)]);
             $manager->persist($post);
-        }
 
+                $comment = new UserActivity();
+                $comment->setType('comment');
+                $comment->setName($this->generateRandomString());
+                $comment->setEmail($this->generateRandomString(32) . '@gmail.com');
+                $comment->setMessage('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
+                $comment->setIP($this->generateIP());
+                $comment->setPost($post);
+                $manager->persist($comment);
+        }
+        
         $manager->flush();
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    function generateIP($length = 12) {
+        $randomString = rand(0, 255) . rand(0, 255) . rand(0, 255) . rand(0, 255);
+        return $randomString;
     }
 }
