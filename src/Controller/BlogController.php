@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -57,11 +58,13 @@ class BlogController extends AbstractController
         $posts = $this->postRepository->findByParams($page, POST_LIMIT, $category_id, $search_key);
         $pages = ($category_id === -1 && $search_key === null ? count($this->postRepository->findAll()) : count($posts)) / POST_LIMIT;
 
-        $data = ['posts' => $posts, 'most_popular_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
-                    'pages' => $pages, 'tags' => $this->tagRepository->findAll(), 
-                        'categories' => $this->categoryRepository->findAll()];
+        $data = [
+            'posts' => $posts, 'most_popular_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, $category_id, $search_key),
+            'pages' => $pages, 'tags' => $this->tagRepository->findAll(),
+            'categories' => $this->categoryRepository->findAll()
+        ];
 
-        if(strcmp($type, "default") === 0) {
+        if (strcmp($type, "default") === 0) {
             return $this->makeTemplateResponse('index.html.twig', $data);
         }
 
@@ -77,17 +80,19 @@ class BlogController extends AbstractController
     public function singleAction($type = 'default', $id)
     {
         $post = $this->postRepository->findById($id)[0];
-        $data = ['post' => $post, 
-                    'most_popular_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null),
-                        'related_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null), 
-                            'tags' => $this->tagRepository->findAll(), 
-                                'categories' => $this->categoryRepository->findAll(),
-                                    'comments' => $this->userActivityRepository->findCommentsByPost($post)];
+        $data = [
+            'post' => $post,
+            'most_popular_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null),
+            'related_posts' => $this->postRepository->findByParams(1, POST_LIMIT_MOST_POPULAR, -1, null),
+            'tags' => $this->tagRepository->findAll(),
+            'categories' => $this->categoryRepository->findAll(),
+            'comments' => $this->userActivityRepository->findCommentsByPost($post)
+        ];
 
         if ($data['post'] != null)
             $this->createView(Request::createFromGlobals(), $data['post']);
 
-        if(strcmp($type, "default") === 0) {
+        if (strcmp($type, "default") === 0) {
             return $this->makeTemplateResponse('single.html.twig', $data);
         }
 
@@ -96,7 +101,40 @@ class BlogController extends AbstractController
         }
     }
 
-    public function makeTemplateResponse($template, $data) {
+    /**
+     * @Route("/post_comment", name="post_comment", options = { "expose" = true })
+     */
+    public function postCommentAction()
+    {
+        $response = new Response();
+
+        try {
+            $request = Request::createFromGlobals();
+
+            $comment = new UserActivity();
+            $comment->setType('comment');
+            $comment->setIp($request->getClientIp());
+
+            $comment->setName($request->request->get('name'));
+            $comment->setEmail($request->request->get('email'));
+            $comment->setMessage($request->request->get('message'));
+            $comment->setWebsite($request->request->get('website'));
+
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+
+            $response->setContent('<html><body><h1>Comment posted!</h1></body></html>');
+            $response->setStatusCode(Response::HTTP_OK);
+        } catch (Exception $e) {
+            $response->setContent('<html><body><h1>Something went wrong!</h1></body></html>');
+            $response->setStatusCode(500);
+        }
+
+        return $response;
+    }
+
+    public function makeTemplateResponse($template, $data)
+    {
         return $this->render($template, $data);
     }
 
@@ -108,7 +146,8 @@ class BlogController extends AbstractController
         return $response;
     }
 
-    public function createView($request, $post) {
+    public function createView($request, $post)
+    {
         $view = new UserActivity();
         $view->setIp($request->getClientIp());
         $view->setPost($post);

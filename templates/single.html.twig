@@ -1,8 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block stylesheets %}
-    {{ encore_entry_link_tags('index') }}
-{% endblock %}
+{% block stylesheets %}{{ encore_entry_link_tags('single') }}{% endblock %}
 
 {% block search_bar_zone %}
     <div class="col-12 search-form-wrap js-search-form">
@@ -20,9 +18,11 @@
         <nav class="site-navigation" role="navigation">
             <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
                 {% if categories is defined %}
-                  {% for category in categories %}
-                    <li><a href="{{ path('index_with_params', {category_id: category.id}) }}">{{ category.name }}</a></li>
-                  {% endfor %}
+                    {% for category in categories %}
+                        <li>
+                            <a href="{{ path('index_with_params', {category_id: category.id}) }}">{{ category.name }}</a>
+                        </li>
+                    {% endfor %}
                 {% endif %}
                 <li class="d-none d-lg-inline-block">
                     <a href="#" class="js-search-toggle">
@@ -75,44 +75,38 @@
                         </p>
                     </div>
                     <div class="pt-5">
-                        <h3 class="mb-5">{{comments|length == 0 ? 'No comments found' : comments|length == 0}}</h3>
+                        <h3 class="mb-5">{{comments|length == 0 ? 'No comments found' : comments|length ~ ' Comments' }}</h3>
                         <ul class="comment-list">
                             {% for comment in comments %}
                                 <li class="comment">
-                                    <div class="vcard">
-                                        <img src="{{ asset('build/images/person_1.jpg') }}" alt="Image placeholder">
-                                    </div>
-                                    <div class="comment-body">
-                                        <h3>Jean Doe</h3>
-                                        <div class="meta">January 9, 2018 at 2:21pm</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                        <p><a href="#" class="reply rounded">Reply</a></p>
-                                    </div>
+                                    <h3>{{comment.name}}</h3>
+                                    <div class="meta">{{comment.createdAt|date('d-m-Y')}}</div>
+                                    <p>{{comment.message}}</p>
                                 </li>
                             {% endfor %}
                         </ul>
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Leave a comment</h3>
-                            <form action="#" class="p-5 bg-light">
+                            <form id="comment_form" action="#" class="p-5 bg-light">
                                 <div class="form-group">
-                                    <label for="name">Name *</label>
-                                    <input type="text" class="form-control" id="name">
+                                    <label for="name">Name * (required, at least 2 characters)</label>
+                                    <input id="name_input" name="name_input" type="text" class="form-control" minlength="2" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email *</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <label for="email">Email * (required)</label>
+                                    <input id="email_input" name="email_input" type="email" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="website">Website</label>
-                                    <input type="url" class="form-control" id="website">
+                                    <input id="website_input" type="url" class="form-control">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                    <label for="message">Message (required, at least 10 characters)</label>
+                                    <textarea id="message_input" name="message_input" id="message" cols="30" rows="10" class="form-control" minlength="10" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Post Comment" class="btn btn-primary">
+                                    <input id="submit_input" value="Post Comment" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>
@@ -208,43 +202,43 @@
                             {% for tag in related_posts[2].tags %}
                                 <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
                             {% endfor %}
-                            <div class="text text-sm">
-                                <h2>{{related_posts[2].title}}</h2>
-                                <span>{{related_posts[2].createdAt|date('d-m-Y')}}</span>
-                            </div>
-                        </a>
-                        <br>
-                        <a href="{{ path('single', {id: related_posts[3].id}) }}" class="hentry v-height img-2 ml-auto gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[3].preview) }}');">
-                            {% for tag in related_posts[3].tags %}
-                                <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
-                            {% endfor %}
-                            <div class="text text-sm">
-                                <h2>{{related_posts[3].title}}</h2>
-                                <span>{{related_posts[3].createdAt|date('d-m-Y')}}</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="site-section bg-lightx">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-5">
-                        <div class="subscribe-1 ">
-                            <h2>Subscribe to our newsletter</h2>
-                            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit nesciunt error illum a explicabo, ipsam nostrum.</p>
-                            <form action="#" class="d-flex">
-                                <input type="text" class="form-control" placeholder="Enter your email address">
-                                <input type="submit" class="btn btn-primary" value="Subscribe">
-                            </form>
+                        <div class="text text-sm">
+                            <h2>{{related_posts[2].title}}</h2>
+                            <span>{{related_posts[2].createdAt|date('d-m-Y')}}</span>
                         </div>
+                    </a>
+
+                    <br>
+
+                    <a href="{{ path('single', {id: related_posts[3].id}) }}" class="hentry v-height img-2 ml-auto gradient" style="background-image: url('{{ asset("build/images/" ~ related_posts[3].preview) }}');">
+                        {% for tag in related_posts[3].tags %}
+                            <span class="post-category text-white" style="background-color:{{ tag.color }} !important;">{{tag.name}}</span>
+                        {% endfor %}
+                        <div class="text text-sm">
+                            <h2>{{related_posts[3].title}}</h2>
+                            <span>{{related_posts[3].createdAt|date('d-m-Y')}}</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-section bg-lightx">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-5">
+                    <div class="subscribe-1 ">
+                        <h2>Subscribe to our newsletter</h2>
+                        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit nesciunt error illum a explicabo, ipsam nostrum.</p>
+                        <form action="#" class="d-flex">
+                            <input type="text" class="form-control" placeholder="Enter your email address">
+                            <input type="submit" class="btn btn-primary" value="Subscribe">
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('index') }}
-    {% endblock %}
+{% block javascripts %}{{ encore_entry_script_tags('single') }}{% endblock %}

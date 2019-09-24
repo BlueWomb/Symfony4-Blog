@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
 
         $color_array = ["#f23a2e", "#8bc34a", "#f89d13", "#6c757d", "#4472ca", "#4b97ff", "#ff0005", "#0a369d", "#d7263d", "#ffd151"];
         $tags = array();
-        for($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             $tag = new Tag();
             $tag->setName("tag_" . $i);
             $tag->setDescription("Descrizione tag_" . $i);
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
         $manager->persist($author);
 
         $images_p = array("img_1.jpg", "img_2.jpg", "img_3.jpg", "img_4.jpg");
-        for($i = 0; $i <= 30; $i++) {
+        for ($i = 0; $i <= 30; $i++) {
             $post = new Post();
             $post->setTitle('Titolo_' . $i);
             $post->setSlug('titolo-' . $i);
@@ -69,20 +69,21 @@ class AppFixtures extends Fixture
             $post->addTag($tags[array_rand($tags)]);
             $manager->persist($post);
 
-                $comment = new UserActivity();
-                $comment->setType('comment');
-                $comment->setName($this->generateRandomString());
-                $comment->setEmail($this->generateRandomString(32) . '@gmail.com');
-                $comment->setMessage('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
-                $comment->setIP($this->generateIP());
-                $comment->setPost($post);
-                $manager->persist($comment);
+            $comment = new UserActivity();
+            $comment->setType('comment');
+            $comment->setName($this->generateRandomString());
+            $comment->setEmail($this->generateRandomString(32) . '@gmail.com');
+            $comment->setMessage('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
+            $comment->setIP($this->generateIP());
+            $comment->setPost($post);
+            $manager->persist($comment);
         }
-        
+
         $manager->flush();
     }
 
-    function generateRandomString($length = 10) {
+    function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -92,7 +93,8 @@ class AppFixtures extends Fixture
         return $randomString;
     }
 
-    function generateIP($length = 12) {
+    function generateIP($length = 12)
+    {
         $randomString = rand(0, 255) . rand(0, 255) . rand(0, 255) . rand(0, 255);
         return $randomString;
     }

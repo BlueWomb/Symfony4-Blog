@@ -26,7 +26,8 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('index', './assets/js/index.js')
-    //.addEntry('page2', './assets/js/page2.js')
+    .addEntry('single', './assets/js/single.js')
+
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/images', to: 'images' }
     ]))

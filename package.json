@@ -23,6 +23,7 @@
         "aos": "^2.3.4",
         "bootstrap": "^4.3.1",
         "jquery-migrate": "^3.1.0",
+        "jquery-validation": "^1.19.1",
         "scrollax": "^1.0.0",
         "webpack-jquery-ui": "^2.0.1"
     }
