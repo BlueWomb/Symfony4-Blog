@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  */
-class Author
+class Author extends BaseUser
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(name="id", type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -39,13 +41,6 @@ class Author
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
-
-    /**
-     * @var string
-     * 
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
-     */
-    private $username;
 
     /**
      * @var string
@@ -131,18 +126,6 @@ class Author
     public function setTitle(?string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
 
         return $this;
     }

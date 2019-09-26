@@ -13,4 +13,6 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
+    FOS\UserBundle\FOSUserBundle::class => ['all' => true],
 ];

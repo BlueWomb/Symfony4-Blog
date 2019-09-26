@@ -2,8 +2,8 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 use App\Entity\Author;
 use App\Entity\Post;
@@ -45,13 +45,18 @@ class AppFixtures extends Fixture
         $author->setName('autore');
         $author->setTitle('title');
         $author->setCompany('company');
-        $author->setUsername('username');
+        $author->setUsername('admin');
+        $author->setEmail('admin@gmail.com');
         $author->setShortBio('bio autore');
         $author->setPhone('1234567890');
         $author->setFacebook('facebook');
         $author->setTwitter('twitter');
         $author->setGithub('github');
         $author->setLinkedin('github');
+
+        $author->setPlainPassword('admin');
+        $author->setEnabled(true);
+        $author->setRoles(array('ROLE_ADMIN'));
         $manager->persist($author);
 
         $images_p = array("img_1.jpg", "img_2.jpg", "img_3.jpg", "img_4.jpg");
