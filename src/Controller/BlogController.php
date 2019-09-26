@@ -70,7 +70,7 @@ class BlogController extends AbstractController
         ];
 
         if (strcmp($type, "default") === 0) {
-            return $this->makeTemplateResponse('index.html.twig', $data);
+            return $this->makeTemplateResponse('user/index.html.twig', $data);
         }
 
         if (strcmp($type, "json") === 0) {
@@ -98,7 +98,7 @@ class BlogController extends AbstractController
             $this->createView(Request::createFromGlobals(), $data['post']);
 
         if (strcmp($type, "default") === 0) {
-            return $this->makeTemplateResponse('single.html.twig', $data);
+            return $this->makeTemplateResponse('user/single.html.twig', $data);
         }
 
         if (strcmp($type, "json") === 0) {
