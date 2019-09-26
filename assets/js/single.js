@@ -43,9 +43,7 @@ $(document).ready(function() {
                     $("#comment-list").html("");
                     output = "";
                     for(var i = 0; i < input.length; i++) {
-                        var date_string = dateformat(new Date(input[i].createdAt.timestamp + input[i].createdAt.offset), "dd-mm-yyyy");
-                        console.log(input[i].createdAt);
-                        console.log(input[i].createdAt.timestamp); 
+                        var date_string = dateformat(new Date(input[i].createdAt), "dd-mm-yyyy");
                         output += '<li class="comment">' +
                                     '<h3>' + input[i].name + '</h3>' +
                                     '<div class="meta">' + date_string + '</div>' +

@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 use App\Entity\UserActivity;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 define('POST_LIMIT', 12);
 define('POST_LIMIT_MOST_POPULAR', 4);
@@ -23,7 +24,8 @@ define('POST_LIMIT_MOST_POPULAR', 4);
 class BlogController extends AbstractController
 {
     private $encoder;
-    private $normalizer;
+    private $object_normalizer;
+    private $datetime_normalizer;
     private $serializer;
 
     private $entityManager;
@@ -36,9 +38,12 @@ class BlogController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->encoder = new JsonEncoder();
-        $this->normalizer = new ObjectNormalizer();
-        $this->normalizer->setIgnoredAttributes(array('posts', 'userActivity'));
-        $this->serializer = new Serializer(array($this->normalizer), array($this->encoder));
+
+        $this->object_normalizer = new ObjectNormalizer();
+        $this->object_normalizer->setIgnoredAttributes(array('posts', 'userActivity'));
+        $this->datetime_normalizer = new DateTimeNormalizer();
+        $this->serializer = new Serializer(array($this->datetime_normalizer, $this->object_normalizer), 
+            array($this->encoder));
 
         $this->entityManager = $entityManager;
         $this->authorRepository = $entityManager->getRepository('App:Author');
