@@ -76,7 +76,7 @@
                     </div>
                     <div class="pt-5">
                         <h3 class="mb-5">{{comments|length == 0 ? 'No comments found' : comments|length ~ ' Comments' }}</h3>
-                        <ul class="comment-list">
+                        <ul id="comment-list" class="comment-list">
                             {% for comment in comments %}
                                 <li class="comment">
                                     <h3>{{comment.name}}</h3>
@@ -87,7 +87,7 @@
                         </ul>
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Leave a comment</h3>
-                            <form id="comment_form" action="#" class="p-5 bg-light">
+                            <form id="comment_form" action="#" whatsend="{{post.id}}" class="p-5 bg-light">
                                 <div class="form-group">
                                     <label for="name">Name * (required, at least 2 characters)</label>
                                     <input id="name_input" name="name_input" type="text" class="form-control" minlength="2" required>

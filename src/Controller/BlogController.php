@@ -102,6 +102,15 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @Route("/get_comments_json/{id}", name="get_comments_json", options = { "expose" = true })
+     */
+    public function getCommentsAction($id) {
+        $post = $this->postRepository->findById($id)[0];
+        $comments = $this->userActivityRepository->findCommentsByPost($post);
+        return $this->makeJsonResponse($comments);
+    }
+
+    /**
      * @Route("/post_comment", name="post_comment", options = { "expose" = true })
      */
     public function postCommentAction()
@@ -119,6 +128,7 @@ class BlogController extends AbstractController
             $comment->setEmail($request->request->get('email'));
             $comment->setMessage($request->request->get('message'));
             $comment->setWebsite($request->request->get('website'));
+            $comment->setPost($this->postRepository->findById($request->request->get('post_id'))[0]);
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();

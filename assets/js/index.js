@@ -1,4 +1,5 @@
 require("../js/app.js");
+var dateformat = require('dateformat');
 
 $(document).ready(function() {
     console.log("Window cleared");
@@ -98,11 +99,12 @@ function update_div(input) {
         for (var j = 0; j < input[i].tags.length; j++)
             output += '<span class="post-category text-white bg-secondary mb-3" style="background-color:' + input[i].tags[j].color + '!important;">' + input[i].tags[j].name + '</span>&nbsp;';
 
+        var date_string = dateformat(new Date(input[i].createdAt.timestamp), "dd-MM-yyyy");   
         output += '<h2><a href="single.html">' + input[i].title + '</a></h2>' +
             '<div class="post-meta align-items-center text-left clearfix">' +
             '<figure class="author-figure mb-0 mr-3 float-left"><img src="/build/images/' + input[i].author.image + '" alt="Image" class="img-fluid"></figure>' +
             '<span class="d-inline-block mt-1">By<a href="#">' + input[i].author.name + '</a></span>' +
-            '<span>&nbsp;-&nbsp;' + input[i].createdAt.toString() + '</span>' +
+            '<span>&nbsp;-&nbsp;' + date_string + '</span>' +
             '</div>' +
             '<p>' + truncate(input[i].description) + '</p>' +
             '<p><a href="' + generate_url + '">Read More</a></p>' +
