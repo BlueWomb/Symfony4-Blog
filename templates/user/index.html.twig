@@ -37,7 +37,7 @@
                                 {% for tag in post.tags %}
                                     <span class="post-category text-white bg-secondary mb-3" style="background-color:{{ tag.color }} !important;">{{ tag.name }}</span>
                                 {% endfor %}
-                                <h2><a href="{{ path('single', {id: post.id}) }}">{{ post.title }}</a></h2>
+                                <h2><a href="{{ path('single', {id: post.id}) }}">{{ post.title|length > 10  ? post.title|slice(0, 10) ~ '...' : post.title }}</a></h2>
                                 <div class="post-meta align-items-center text-left clearfix">
                                     <figure class="author-figure mb-0 mr-3 float-left"><img src="{{ asset('build/images/' ~ post.author.image) }}" alt="Image" class="img-fluid"></figure>
                                     <span class="d-inline-block mt-1">By<a href="#"> {{ post.author.name }}</a></span>

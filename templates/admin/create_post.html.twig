@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block right_bar_zone %}
+    <div class="col-8 text-right">
+        <nav class="site-navigation" role="navigation">
+            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
+                <li>
+                    <a href="#">Crea Categoria</a>
+                </li>
+                <li>
+                    <a href="#">Crea Tag</a>
+                </li>
+                <li>
+                    <a href="#">Crea Post</a>
+                </li>
+            </ul>
+        </nav>
+        <a class="site-menu-toggle js-menu-toggle text-black d-inline-block d-lg-none">
+            <span class="icon-menu h3"></span>
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <section class="site-section bg-light">
+        <div class="container">
+            <div class="row blog-entries element-animate">
+                <div class="col-md-12 main-content">
+                    <div class="comment-form-wrap">
+                        <h3 class="mb-5" style="text-align: center;">Create Post</h3>
+                        {{form_start(form)}}
+                            <div class="form-group">
+                                {{ form_label(form.title) }}</br>
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control', 'aria-describedby': 'titleHelp'}}) }}
+                                <small id="titleHelp" class="form-text text-muted">{{ form_errors(form.title) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.preview) }}
+                                {{ form_widget(form.preview, {'attr': {'class': 'form-control', 'aria-describedby': 'previewHelp'}}) }}
+                                <small id="previewHelp" class="form-text text-muted">{{ form_errors(form.preview) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.description) }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'aria-describedby': 'descriptionHelp'}}) }}
+                                <small id="descriptionHelp" class="form-text text-muted">{{ form_errors(form.description) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.body) }}
+                                {{ form_widget(form.body, {'attr': {'class': 'form-control', 'aria-describedby': 'bodyHelp', 'rows': '10'}}) }}
+                                <small id="bodyHelp" class="form-text text-muted">{{ form_errors(form.body) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.category) }}
+                                {{ form_widget(form.category, {'attr': {'class': 'form-control', 'aria-describedby': 'categoryHelp'}}) }}
+                                <small id="categoryHelp" class="form-text text-muted">{{ form_errors(form.category) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.tags) }}
+                                {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'aria-describedby': 'titleHelp'}}) }}
+                                <small id="titleHelp" class="form-text text-muted">{{ form_errors(form.tags) }}</small>
+                            </div>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

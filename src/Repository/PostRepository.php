@@ -37,6 +37,9 @@ class PostRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('bp.title like :search_key');
             $queryBuilder->setParameter('search_key', '%'.addcslashes($search_key, '%_').'%');
         }
+
+        $queryBuilder->andWhere('bp.isVisible = :boolean');
+        $queryBuilder->setParameter('boolean', 1);
         
         return $queryBuilder->getQuery()->getResult();
     }

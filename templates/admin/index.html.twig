@@ -1,20 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block right_bar_zone %}
+    <div class="col-8 text-right">
+        <nav class="site-navigation" role="navigation">
+            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
+                <li>
+                    <a href="#">Crea Categoria</a>
+                </li>
+                <li>
+                    <a href="#">Crea Tag</a>
+                </li>
+                <li>
+                    <a href="{{path ('create_post')}}">Crea Post</a>
+                </li>
+            </ul>
+        </nav>
+        <a class="site-menu-toggle js-menu-toggle text-black d-inline-block d-lg-none">
+            <span class="icon-menu h3"></span>
+        </a>
+    </div>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="site-section bg-light">
+        <div class="container">
+            <div id="div-site-content" class="row">
+                <h2>Cateogry Table</h2>
+                <p>(<a href="#">Add</a> a new category)</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categories %}
+                        <tr>
+                            <td>{{category.name}}</td>
+                            <td>{{category.description}}</td>
+                            <td><a href="#">DEL</a>&nbsp;<a href="#">MODIFY<a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/User/Desktop/Symfony4-Blog/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/User/Desktop/Symfony4-Blog/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div class="site-section bg-light">
+        <div class="container">
+            <div id="div-site-content" class="row">
+                <h2>Tags Table</h2>
+                <p>(<a href="#">Add</a> a new tag)</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in tags %}
+                        <tr>
+                            <td>{{tag.name}}</td>
+                            <td>{{tag.description}}</td>
+                            <td><a href="#">DEL</a>&nbsp;<a href="#">MODIFY<a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+

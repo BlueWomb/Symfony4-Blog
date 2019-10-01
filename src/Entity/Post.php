@@ -92,6 +92,11 @@ class Post
     private $updatedAt;
 
     /**
+     * @ORM\Column(name="isVisible", type="boolean", options={"default":"1"})
+     */
+    private $isVisible = true;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserActivity", mappedBy="post")
      */
     private $userActivity;
@@ -290,5 +295,17 @@ class Post
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
+
+        return $this;
     }
 }
