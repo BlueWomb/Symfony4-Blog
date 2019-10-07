@@ -3,6 +3,7 @@
 /public/bundles/
 /var/
 /vendor/
+/public/uploads/preview/*
 ###< symfony/framework-bundle ###
 
 ###> symfony/webpack-encore-pack ###

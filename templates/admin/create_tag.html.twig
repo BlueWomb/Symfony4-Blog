@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block right_bar_zone %}
+    {% include "admin/header.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <section class="site-section bg-light">
+        <div class="container">
+            <div class="row blog-entries element-animate">
+                <div class="col-md-12 main-content">
+                    <div class="comment-form-wrap">
+                        <h3 class="mb-5" style="text-align: center;">Create Category</h3>
+                        {{form_start(form)}}
+                            <div class="form-group">
+                                {{ form_label(form.name) }}</br>
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'aria-describedby': 'nameHelp'}}) }}
+                                <small id="nameHelp" class="form-text text-muted">{{ form_errors(form.name) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.description) }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'aria-describedby': 'descriptionHelp'}}) }}
+                                <small id="descriptionHelp" class="form-text text-muted">{{ form_errors(form.description) }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.color) }}
+                                {{ form_widget(form.color, {'attr': {'class': 'form-control', 'aria-describedby': 'colorHelp'}}) }}
+                                <small id="colorHelp" class="form-text text-muted">{{ form_errors(form.color) }}</small>
+                            </div>
+                        {{form_end(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

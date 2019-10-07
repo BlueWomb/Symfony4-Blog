@@ -1,24 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block right_bar_zone %}
-    <div class="col-8 text-right">
-        <nav class="site-navigation" role="navigation">
-            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
-                <li>
-                    <a href="#">Crea Categoria</a>
-                </li>
-                <li>
-                    <a href="#">Crea Tag</a>
-                </li>
-                <li>
-                    <a href="#">Crea Post</a>
-                </li>
-            </ul>
-        </nav>
-        <a class="site-menu-toggle js-menu-toggle text-black d-inline-block d-lg-none">
-            <span class="icon-menu h3"></span>
-        </a>
-    </div>
+    {% include "admin/header.html.twig" %}
 {% endblock %}
 
 {% block body %}
@@ -66,4 +49,3 @@
         </div>
     </section>
 {% endblock %}
-
