@@ -15,6 +15,8 @@ Finally, run the following commands from the terminal:
 - yarn install
 - yarn encore dev
 - php bin/console assets:install --symlink public
+- php bin/console doctrine:database:create
+- php bin/console doctrine:schema:update --force
 - php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 - php bin/console doctrine:fixtures:load
 
