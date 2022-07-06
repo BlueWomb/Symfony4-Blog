@@ -24,7 +24,7 @@
         "bootstrap": "^4.3.1",
         "dateformat": "^3.0.3",
         "jquery-migrate": "^3.1.0",
-        "jquery-validation": "^1.19.1",
+        "jquery-validation": "^1.19.5",
         "scrollax": "^1.0.0",
         "webpack-jquery-ui": "^2.0.1"
     }
